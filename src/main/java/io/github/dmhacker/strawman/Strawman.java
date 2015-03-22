@@ -36,23 +36,23 @@ public class Strawman {
 	
 	private static void findPoll() throws Exception {
 		
-        String string = JOptionPane.showInputDialog("Poll Number");
-        int pollNumber;
-        try {
-        	pollNumber = Integer.parseInt(string);
-        } catch (NumberFormatException nfe) {
-        	findPoll();
-        	return;
-        }
-        
-        PollFetcher fetcher = new PollFetcher(pollNumber);
-        if (!fetcher.valid()) {
-        	findPoll();
-        	return;
-        }
-        
-        Poll poll = fetcher.parse();
-        poll.select();
+	        String string = JOptionPane.showInputDialog("Poll Number");
+	        int pollNumber;
+	        try {
+	        	pollNumber = Integer.parseInt(string);
+	        } catch (NumberFormatException nfe) {
+	        	findPoll();
+	        	return;
+	        }
+	        
+	        PollFetcher fetcher = new PollFetcher(pollNumber);
+	        if (!fetcher.valid()) {
+	        	findPoll();
+	        	return;
+	        }
+	        
+	        Poll poll = fetcher.parse();
+	        poll.select();
 	}
 	
 	private static void print(String string) {
