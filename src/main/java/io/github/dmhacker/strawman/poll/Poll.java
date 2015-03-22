@@ -68,7 +68,7 @@ public class Poll {
 		frame.setFocusable(true);
 		frame.setVisible(true);
 		frame.setSize(400, 600);
-		frame.setTitle(multi ? "Poll [Multi]" : "Poll [Single]");
+		frame.setTitle("Poll #"+id);
 		Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		frame.setLocation((rect.width - frame.getWidth()) / 2 , (rect.height - frame.getHeight()) / 2);
 		
@@ -147,7 +147,6 @@ public class Poll {
 			
 			System.setProperty("http.proxyHost", host);
 			System.setProperty("http.proxyPort", String.valueOf(port));
-			
 			vote(json);
 		}
 	}

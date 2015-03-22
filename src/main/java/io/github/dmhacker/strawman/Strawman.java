@@ -12,6 +12,7 @@ import io.github.dmhacker.strawman.proxy.ProxyInfo;
 import io.github.dmhacker.strawman.proxy.YasakvarProxyGatherer;
 
 public class Strawman {
+	private static final String VERSION = "0.0.2";
 	private static Set<ProxyGatherer> HARVESTERS = new HashSet<ProxyGatherer>();
 	public static Set<ProxyInfo> PROXIES = new HashSet<ProxyInfo>();
 	
@@ -20,30 +21,34 @@ public class Strawman {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		System.setProperty("java.net.useSystemProxies", "true");
-		
-		// Get list of proxies
-		print("Gathering proxies ...");
+		print("v"+VERSION+" booting up.");
+
+		findProxies();
+		findPoll();
+	}
+	
+	private static void findProxies() {
 		for (ProxyGatherer gatherer : HARVESTERS) {
 			PROXIES.addAll(gatherer.gather());
 		}
-		print("Found a total of "+PROXIES.size()+" proxies to use.\n");
+		print("Proxies found: "+PROXIES.size()+"\n");
+	}
+	
+	private static void findPoll() throws Exception {
 		
-		// Get polls
         String string = JOptionPane.showInputDialog("Poll Number");
-        int pollNumber = 0;
+        int pollNumber;
         try {
         	pollNumber = Integer.parseInt(string);
         } catch (NumberFormatException nfe) {
-        	print("Not a number. Exiting.");
-        	System.exit(-1);
+        	findPoll();
+        	return;
         }
-        
         
         PollFetcher fetcher = new PollFetcher(pollNumber);
         if (!fetcher.valid()) {
-        	print("Invalid poll. Exiting.");
-        	System.exit(-1);
+        	findPoll();
+        	return;
         }
         
         Poll poll = fetcher.parse();
